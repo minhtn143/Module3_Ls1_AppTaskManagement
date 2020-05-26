@@ -20,7 +20,6 @@ Route::get('/', function () {
 Route::prefix('customer')->group(function () {
     Route::view('index', 'index');
 
-
     Route::get('create', function () {
         // Hiển thị Form tạo khách hàng
     });
@@ -45,3 +44,7 @@ Route::prefix('customer')->group(function () {
         // Xóa thông tin dữ liệu khách hàng
     });
 });
+
+Route::resource('customers', 'CustomerController');
+
+Route::resource('tasks','TaskController');
