@@ -16,35 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-// Hiển thị danh sách khách hàng
-Route::prefix('customer')->group(function () {
-    Route::view('index', 'index');
-
-    Route::get('create', function () {
-        // Hiển thị Form tạo khách hàng
-    });
-
-    Route::post('store', function () {
-        // Xử lý lưu dữ liệu tạo khách hàng thong qua phương thức POST từ form
-    });
-
-    Route::get('{id}/show', function () {
-        // Hiển thị thông tin chi tiết khách hàng có mã định danh id
-    });
-
-    Route::get('{id}/edit', function () {
-        // Hiển thị Form chỉnh sửa thông tin khách hàng
-    });
-
-    Route::patch('{id}/update', function () {
-        // xử lý lưu dữ liệu thông tin khách hàng được chỉnh sửa thông qua PATCH từ form
-    });
-
-    Route::delete('{id}', function () {
-        // Xóa thông tin dữ liệu khách hàng
-    });
-});
 
 Route::resource('customers', 'CustomerController');
 
-Route::resource('tasks','TaskController');
+
+//tao group route tasks
+Route::group(['prefix' => 'tasks'], function () {
+    Route::get('/','TaskController@index')->name('tasks.index');
+    Route::get('/create','TaskController@create')->name('tasks.create');
+    Route::post('/create','TaskController@store')->name('tasks.store');
+    Route::get('/{id}/edit','TaskController@edit')->name('tasks.edit');
+    Route::post('/{id}/edit','TaskController@update')->name('tasks.update');
+    Route::get('/{id}/destroy','TaskController@destroy')->name('tasks.destroy');
+});
